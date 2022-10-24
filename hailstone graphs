@@ -1,0 +1,82 @@
+import matplotlib.pyplot as plt
+import numpy as np
+import math
+import plotly.graph_objects as go
+import plotly.express as px
+
+def hailstone_seq(start):
+  list_out = []
+  while start > 1:
+    list_out.append(int(start))
+    if start%2 == 1:
+      start = int((start*3+1))
+    else:
+      start = int((start/2))
+  list_out.append(1)
+  return list_out
+
+def brownian_seq(n):
+  list_out = []
+  i=0
+  while n > 1:
+    list_out.append(int((n-1)/step(n))*i)
+    if n%2 == 1:
+      n = int((n*3+1))
+    else:
+      n = int((n/2))
+    i+=1
+  list_out.append(int((n-1)))
+  return list_out
+
+def step(n):
+  step=0
+  if (n==1):
+    step+=1
+    return step
+  else:
+    while (n!=1):
+      if n%2==0:
+        n=n//2
+        step+=1
+      elif n%2==1:
+        n=(3*n)+1
+        step+=1
+    return step
+
+#_____________________________________________
+def normal_graph(n):
+    list_out = hailstone_seq(n)
+    x=np.linspace(1,step(n),1)
+    y=list_out
+    plt.xlabel("number of iterations")
+    plt.ylabel("hailstone numbers")
+    plt.title("hailstone distribution")
+    plt.plot(y)
+    plt.show()
+#______________________________________________
+def log_graph(n):
+    list_out = hailstone_seq(n)
+    x=np.linspace(1,step(n),1)
+    y=list_out
+    plt.xlabel("number of iterations")
+    plt.ylabel("hailstone numbers")
+    plt.title("hailstone distribution")
+    plt.plot(y)
+    plt.yscale("log")
+    plt.show()
+#______________________________________________
+def brownian_graph(n):
+    list_out = brownian_seq(n)
+    x=np.linspace(1,step(n),1)
+    y=list_out
+    plt.xlabel("number of iterations")
+    plt.ylabel("hailstone numbers")
+    plt.title("hailstone distribution")
+    plt.plot(y)
+    plt.yscale("log")
+    plt.show()
+
+n=int(input("Εισάγετε τον αριθμό που θέλετε να μελετήσετε: "))
+normal_graph(n)
+log_graph(n)
+brownian_graph(n)
